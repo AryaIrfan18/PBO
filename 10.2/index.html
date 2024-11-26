@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form with Catalog</title>
+    <link rel="stylesheet" href="./pertemuan10.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        const pbo = {
+            // Model untuk database
+            model: {
+                mahasiswa: [
+                    { username: 'arya', pin: 'arya123' },
+                    { username: 'irfan', pin: 'irfan123' },
+                    { username: 'ipwija', pin: 'ipwija123' },
+                ],
+                catalog: [
+                    { id: 1, name: 'Dimsum Udang', price: 'Rp 15.000', image: 'https://i.pinimg.com/736x/c6/e2/35/c6e235c1097f0b2c27a8f5e683282137.jpg' },
+                    { id: 2, name: 'Bakso', price: 'Rp 20.000', image: 'https://i.pinimg.com/736x/b2/8f/2f/b28f2f027c80ab7e39a6d5a91e780b78.jpg' },
+                    { id: 3, name: 'Soto', price: 'Rp 20.000', image: 'https://i.pinimg.com/736x/22/a9/9e/22a99e5cff6ef7fd0c703e0b0ae42f66.jpg' },
+                    { id: 4, name: 'Mie Goreng', price: 'Rp 15.000', image: 'https://i.pinimg.com/736x/74/e6/66/74e66635b6386750a1153937bbacc3ad.jpg' },
+                    { id: 5, name: 'Chicken Katsu', price: 'Rp 25.000', image: 'https://i.pinimg.com/736x/69/94/d1/6994d1243698509ae71a492830ea548d.jpg' },
+                    { id: 6, name: 'Nasi Goreng', price: 'Rp 20.000', image: 'https://i.pinimg.com/736x/46/df/c7/46dfc729c8fbf1ced44a572bab1c5db9.jpg' }
+                ],
+                cart: []
+            },
+
+            // View untuk tampilan
+            view: {
+                signform: function () {
+                    return `
+                        <div class="input-form">
+                            Username: <input type='text' id='username'><br/>
+                            Pin: <input type='password' id='pin'><br/>
+                            <button id='login'>Login</button>
+                            <button id='cancel'>Cancel</button>
+                        </div>
+                    `;
+                },
+
+                catalogView: function () {
+                    const items = pbo.model.catalog.map(item => `
+                        <div class="catalog-item" data-id="${item.id}">
+                            <img src="${item.image}" alt="${item.name}">
+                            <h3>${item.name}</h3>
+                            <p>${item.description}</p>
+                            <p><strong>${item.price}</strong></p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    `).join('');
+                    return `
+                        <div class="catalog">
+                            <h2>Catalog</h2>
+                            <div class="items">${items}</div>
+                        </div>
+                    `;
+                },
+
+                cartView: function () {
+                    const items = pbo.model.cart.map(item => `
+                        <div class="cart-item">
+                            <h3>${item.name}</h3>
+                            <p>${item.price}</p>
+                        </div>
+                    `).join('');
+                    return `
+                        <div class="cart">
+                            <h2>Your Cart</h2>
+                            <div class="items">${items}</div>
+                            <button id="checkout">Checkout</button>
+                        </div>
+                    `;
+                },
+            },
+
+            // Controller untuk perlakuan terhadap view dan database
+            controller: {
+                init: function () {
+                    const app = document.getElementById('app');
+                    app.innerHTML = pbo.view.signform();
+
+                    document.getElementById('login').addEventListener('click', this.signin);
+                    document.getElementById('cancel').addEventListener('click', this.signout);
+                },
+
+                signin: function () {
+                    const username = document.getElementById('username').value;
+                    const pin = document.getElementById('pin').value;
+
+                    const userFound = pbo.model.mahasiswa.find(
+                        (user) => user.username === username && user.pin === pin
+                    );
+
+                    if (userFound) {
+                        alert('Login berhasil!');
+                        pbo.controller.showCatalog(); // Show the catalog after successful login
+                    } else {
+                        alert('Username atau Pin salah!');
+                    }
+                },
+
+                signout: function () {
+                    document.getElementById('username').value = '';
+                    document.getElementById('pin').value = '';
+                },
+
+                showCatalog: function () {
+                    const app = document.getElementById('app');
+                    app.innerHTML = pbo.view.catalogView();
+
+                    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+                    addToCartButtons.forEach(button => {
+                        button.addEventListener('click', this.addToCart);
+                    });
+                },
+
+                addToCart: function (e) {
+                    const itemId = e.target.closest('.catalog-item').getAttribute('data-id');
+                    const item = pbo.model.catalog.find(item => item.id == itemId);
+
+                    if (item) {
+                        pbo.model.cart.push(item);
+                        alert(`${item.name} added to your cart!`);
+                    }
+                },
+
+                showCart: function () {
+                    const app = document.getElementById('app');
+                    app.innerHTML = pbo.view.cartView();
+
+                    document.getElementById('checkout').addEventListener('click', this.checkout);
+                },
+
+                checkout: function () {
+                    alert('Proceeding to checkout...');
+                    // Here you can add logic for checkout
+                }
+            },
+        };
+
+        // Inisialisasi programnya
+        pbo.controller.init();
+    </script>
+</body>
+</html>
