@@ -43,16 +43,16 @@ button {
 }
 
 button:hover {
-    background-color: #FF1493;
+    background-color: #0000FF;
     transform: translateY(-3px);
 }
 
 button#cancel {
-    background-color: #FF1493;
+    background-color: #0000FF;
 }
 
 button#cancel:hover {
-    background-color: #FF1493;
+    background-color: #0000FF;
 }
 
 /* New styles for the Catalog and Cart */
