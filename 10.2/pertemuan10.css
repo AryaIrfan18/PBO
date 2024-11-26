@@ -1,7 +1,7 @@
 /* Existing styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #0000FF;
+    background-color: #000080;
     margin: 0;
     padding: 0;
     display: flex;
@@ -37,22 +37,22 @@ button {
     border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
-    background-color: #0000FF;
+    background-color: #000080;
     color: white;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0000FF;
+    background-color: #000080;
     transform: translateY(-3px);
 }
 
 button#cancel {
-    background-color: #0000FF;
+    background-color: #000080;
 }
 
 button#cancel:hover {
-    background-color: #0000FF;
+    background-color: #000080;
 }
 
 /* New styles for the Catalog and Cart */
