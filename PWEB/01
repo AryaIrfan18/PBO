@@ -1,0 +1,18 @@
+<html>
+<head>
+</head>
+<body>
+<header></header>
+  <main>
+		<section id="paragraf"><b>halo</b> <i> Pemrograman web</i></section>
+		<section id="table">
+			<table border="i">  
+        <tr><td>1</td><td>2</td> </tr>
+        <tr><td>3</td> <td>4</td></tr>
+      </table>
+      </section>
+      <section id="form"> Hi PW </section>
+        </main>
+      <footer></footer>
+      </body>
+  </html>
